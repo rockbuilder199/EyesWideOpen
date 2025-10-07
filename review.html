@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review - The Learning Compound</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/flashcards.css">
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <span>→</span>
+            <a href="#" onclick="goBackToTopic()" id="reviewBreadcrumbTopic">Topic</a>
+            <span>→</span>
+            <a href="#" onclick="goBackToModule()" id="reviewBreadcrumbModule">Module</a>
+            <span>→</span>
+            <span>Review</span>
+        </div>
+
+        <div class="review-info">
+            <p id="reviewProgress">Card 1 of 10</p>
+            <p id="reviewMode">Sequential Mode</p>
+        </div>
+
+        <div class="flashcard" id="reviewCard" onclick="flipCard()">
+            <div id="reviewCardImage"></div>
+            <div class="flashcard-content" id="reviewCardContent">
+                Click to start review
+            </div>
+            <div class="flip-hint">Click card or press Space to flip</div>
+        </div>
+
+        <div class="review-controls">
+            <button class="btn btn-secondary" onclick="previousCard()">← Previous</button>
+            <button class="btn btn-secondary" onclick="flipCard()">Flip Card</button>
+            <button class="btn" onclick="nextCard()">Next →</button>
+            <button class="btn btn-danger" onclick="endReview()">End Review</button>
+        </div>
+
+        <div class="keyboard-shortcuts">
+            <p><strong>Shortcuts:</strong> Space/Enter: Flip | ←→: Navigate | Escape: Exit</p>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/flashcards.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

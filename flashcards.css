@@ -1,0 +1,198 @@
+/* Flashcard Review Styles */
+
+/* Review Info */
+.review-info {
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.review-info p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+#reviewProgress {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+#reviewMode {
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Flashcard */
+.flashcard {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 40px;
+    margin: 20px 0;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.2);
+    position: relative;
+}
+
+.flashcard:hover {
+    transform: scale(1.02);
+    border-color: rgba(255,255,255,0.3);
+}
+
+.flashcard.flipped {
+    background: rgba(255,255,255,0.15);
+    border-color: #4CAF50;
+}
+
+.flashcard-content {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.flashcard-image {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.flip-hint {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* Review Controls */
+.review-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.review-controls .btn {
+    min-width: 120px;
+}
+
+/* Keyboard Shortcuts */
+.keyboard-shortcuts {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+}
+
+.keyboard-shortcuts p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4CAF50;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Card Animations */
+@keyframes flipIn {
+    from {
+        opacity: 0;
+        transform: rotateY(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: rotateY(0deg);
+    }
+}
+
+.flashcard.animating {
+    animation: flipIn 0.3s ease-out;
+}
+
+/* Review Responsive */
+@media (max-width: 768px) {
+    .flashcard {
+        padding: 30px 20px;
+        min-height: 300px;
+    }
+
+    .flashcard-content {
+        font-size: 1.2rem;
+    }
+
+    /* FIX 3: Keep review controls horizontal */
+    .review-controls {
+        flex-direction: row !important;
+        justify-content: center;
+        flex-wrap: wrap !important;
+        gap: 8px;
+        max-width: 100%;
+    }
+
+    .review-controls .btn {
+        min-width: 85px !important;
+        padding: 8px 10px !important;
+        font-size: 0.85rem !important;
+        flex: 0 0 auto;
+    }
+
+    .keyboard-shortcuts {
+        margin-top: 20px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .flashcard {
+        padding: 25px 15px;
+        min-height: 250px;
+    }
+
+    .flashcard-content {
+        font-size: 1.1rem;
+    }
+
+    .flashcard-image {
+        max-height: 200px;
+    }
+
+    .flip-hint {
+        font-size: 0.7rem;
+    }
+
+    /* Even smaller review control buttons */
+    .review-controls .btn {
+        min-width: 70px !important;
+        padding: 6px 8px !important;
+        font-size: 0.75rem !important;
+    }
+}

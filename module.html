@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Details - The Learning Compound</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <span>→</span>
+            <a href="#" onclick="goBackToTopic()" id="breadcrumbTopic">Topic</a>
+            <span>→</span>
+            <span id="currentModuleName">Module</span>
+        </div>
+
+        <div class="card">
+            <div class="module-tabs">
+                <button class="tab-btn" id="flashcardsTab" onclick="switchTab('flashcards')">Flashcards</button>
+                <button class="tab-btn active" id="contentTab" onclick="switchTab('content')">Content & Study Material</button>
+                <button class="tab-btn" id="videosTab" onclick="switchTab('videos')">Videos</button>
+            </div>
+
+            <!-- Flashcards Section -->
+            <div id="flashcardsSection" class="tab-content" style="display: none;">
+                <div class="action-buttons-horizontal">
+                    <button class="btn btn-sm" onclick="showAddFlashcardModal()">Add Flashcard</button>
+                    <button class="btn btn-secondary btn-sm" onclick="showCSVImportModal()">Import CSV</button>
+                    <button class="btn btn-sm" onclick="startReview('sequential')" id="reviewSequentialBtn">Review Sequential</button>
+                    <button class="btn btn-sm" onclick="startReview('random')" id="reviewRandomBtn">Review Random</button>
+                </div>
+                <ul class="item-list compact-list" id="flashcardsList"></ul>
+            </div>
+
+            <!-- Content Section -->
+            <div id="contentSection" class="tab-content">
+                <div class="content-editor-container">
+                    <div 
+                        id="moduleContentEditor" 
+                        class="content-editor" 
+                        contenteditable="true" 
+                        placeholder="Add your study notes, paste text, and organize content here..."
+                        oninput="saveModuleContent()"
+                    ></div>
+                </div>
+            </div>
+
+            <!-- Videos Section -->
+            <div id="videosSection" class="tab-content" style="display: none;">
+                <div class="action-buttons-horizontal">
+                    <button class="btn btn-sm" onclick="showAddVideoModal()">Add Video</button>
+                </div>
+                <ul class="item-list" id="videosList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Flashcard Modal -->
+    <div id="flashcardModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('flashcardModal')">&times;</span>
+            <h2 id="flashcardModalTitle">Add New Flashcard</h2>
+            <form id="flashcardForm" onsubmit="addFlashcard(event)">
+                <div class="form-group">
+                    <label for="flashcardFront">Front:</label>
+                    <textarea id="flashcardFront" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="frontImageFilename">Front Image (Optional):</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="frontImageFilename" style="flex: 1;">
+                            <option value="">-- No Image --</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="browseImages('front')" style="margin: 0;">Browse</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="flashcardBack">Back:</label>
+                    <textarea id="flashcardBack" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="backImageFilename">Back Image (Optional):</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="backImageFilename" style="flex: 1;">
+                            <option value="">-- No Image --</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="browseImages('back')" style="margin: 0;">Browse</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Add Flashcard</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('flashcardModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Video Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('videoModal')">&times;</span>
+            <h2 id="videoModalTitle">Add New Video</h2>
+            <form id="videoForm" onsubmit="addVideo(event)">
+                <div class="form-group">
+                    <label for="videoTitle">Video Title:</label>
+                    <input type="text" id="videoTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="videoFilename">Video File:</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="videoFilename" style="flex: 1;" required>
+                            <option value="">-- Select Video --</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="browseVideos()" style="margin: 0;">Browse</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoDescription">Description (Optional):</label>
+                    <textarea id="videoDescription" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Add Video</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('videoModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Browser Modal -->
+    <div id="fileBrowserModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('fileBrowserModal')">&times;</span>
+            <h2 id="fileBrowserTitle">Select File</h2>
+            <div id="fileBrowserContent" style="max-height: 400px; overflow-y: auto;">
+                <!-- Files will be loaded here -->
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('fileBrowserModal')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- CSV Import Modal -->
+    <div id="csvModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('csvModal')">&times;</span>
+            <h2>Import Flashcards from CSV</h2>
+            <div class="csv-import">
+                <h3>CSV Format</h3>
+                <p>Your CSV should have two columns: <strong>front,back</strong></p>
+                <pre class="csv-example">front,back
+"What is thermodynamics?","Study of heat and energy"
+"First Law","Energy cannot be created or destroyed"</pre>
+                
+                <div class="form-group">
+                    <label for="csvFile">Select CSV File:</label>
+                    <input type="file" id="csvFile" accept=".csv" onchange="handleCSVUpload(event)">
+                </div>
+                
+                <div id="csvPreview" style="display: none; margin-top: 20px;">
+                    <h4>Preview:</h4>
+                    <div id="csvPreviewContent"></div>
+                </div>
+                
+                <button class="btn" onclick="importCSV()" id="importBtn" style="display: none;">Import Flashcards</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('csvModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/file-browser.js"></script>
+    <script src="js/csv-import.js"></script>
+    <script src="js/flashcards.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

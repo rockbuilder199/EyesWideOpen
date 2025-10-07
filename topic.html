@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Details - The Learning Compound</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Dashboard</a>
+            <span>→</span>
+            <span id="currentTopicName">Topic</span>
+        </div>
+
+        <div class="card">
+            <h2 id="topicDetailTitle">Topic Modules</h2>
+            <button class="btn" onclick="showAddModuleModal()">Add Module</button>
+            <ul class="item-list compact-list" id="modulesList"></ul>
+        </div>
+    </div>
+
+    <!-- Add Module Modal -->
+    <div id="moduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('moduleModal')">&times;</span>
+            <h2>Add New Module</h2>
+            <form id="moduleForm" onsubmit="addModule(event)">
+                <div class="form-group">
+                    <label for="moduleName">Module Name:</label>
+                    <input type="text" id="moduleName" required>
+                </div>
+                <button type="submit" class="btn">Add Module</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('moduleModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
